@@ -9,6 +9,7 @@ const baseUrl = "https://striveschool-api.herokuapp.com/api/movies/";
 //else genre is not included on (genres fetch) then create the genre and then do the if statement
 
 //Fetch Genres
+
 fetch(baseUrl, {
   method: "GET",
   headers: {
@@ -19,11 +20,6 @@ fetch(baseUrl, {
   .then((response) => response.json())
   .then((categories) => console.log(categories));
 
-// const renderMovies = (arrayOfMovies) => {
-//   arrayOfMovies.forEach((movies) => {
-//     console.log("Inside the forEach()");
-//     console.log(movie);
-//     console.log(movie.name);
 //     container.innerHTML += `<div class="card col-sm-6 col-md-4 col-lg-3" style="width: 18rem;">
 //       <img src="${movie.img}" class="card-img-top" alt="${movie.title}+ cover">
 //       <div class="card-body">
@@ -40,16 +36,40 @@ fetch(baseUrl, {
 //   });
 // };
 
-//Fetch Movies
-fetch("https://striveschool-api.herokuapp.com/api/movies/horror", {
-  method: "GET",
-  headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
-  },
-})
+//Fetch Movies synch
+const getMovies = fetch(
+  "https://striveschool-api.herokuapp.com/api/movies/horror",
+  {
+    method: "GET",
+    headers: {
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
+    },
+  }
+)
   .then((response) => response.json())
   .then((movies) => console.log(movies));
+
+//Fetch Movies asynch
+// const getMovies = async () => {
+//     let unreadableData = await fetch(
+//         "https://striveschool-api.herokuapp.com/api/movies/horror", {
+//         method: "GET",
+//         headers: {
+//           Authorization:
+//             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
+//         }),
+//         let movies = await unreadableData.json();
+//         console.log(books);
+// };
+
+const renderMovies = (arrayOfMovies) => {
+  arrayOfMovies.forEach((movie) => {
+    console.log("Inside the forEach()");
+    console.log(movie);
+    console.log(movie.name);
+  });
+};
 
 async function onFormSubmit(event) {
   event.preventDefault();
