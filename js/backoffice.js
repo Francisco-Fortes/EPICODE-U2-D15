@@ -1,7 +1,7 @@
-const inputName = document.querySelector("#movie-name")
-const inputDescription = document.querySelector("#movie-description")
+const inputName = document.querySelector("#movie-name");
+const inputDescription = document.querySelector("#movie-description");
 const inputCategory = document.querySelector("#movie-category");
-const inputImg = document.querySelector("#movie-img")
+const inputImg = document.querySelector("#movie-img");
 const baseUrl = "https://striveschool-api.herokuapp.com/api/movies/";
 const optionsGet = {
   method: "GET",
@@ -10,6 +10,9 @@ const optionsGet = {
       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
   },
 };
+const params = new URLSearchParams(window.location.search);
+const movieId = params.get("movieId");
+const movieCategory = params.get("category");
 // const optionsPost = {
 //   method: "POST",
 //   headers: {
@@ -18,7 +21,6 @@ const optionsGet = {
 //     "Content-Type": "application/json",
 //   },
 // };
-const endpoint = movieId
 
 async function onFormSubmit(event) {
   event.preventDefault();
@@ -40,10 +42,9 @@ async function onFormSubmit(event) {
     },
     body: JSON.stringify(newMovie),
   };
-   try {
-    ? `${baseUrl}${movieId}`
-    : `${baseUrl}`;
-    
+  try {
+    const endpoint = movieId ? `${baseUrl}${movieId}` : `${baseUrl}`;
+
     const response = await fetch(endpoint, options);
     if (response.ok) {
       alert(
@@ -63,30 +64,27 @@ async function onFormSubmit(event) {
 }
 window.onload = async () => {
   console.log("Am I working?");
-  getMoviesCategory("drama");
-  getMoviesCategory("comedy");
-  getMoviesCategory("horror");
-    if (movieId) {
-      const response = await fetch(
-        `${baseUrl}${movieCategory}`,
-        {
-          headers: {
-            Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
-          },
-        }
-      );
-      const movies = await response.json();
-      const movie = movies.find((movie) => movie._id === movieId);
-      console.log(movies);
-      let addMovie = document.getElementById("add-movie");
-      addMovie.innerText = "Edit";
-      addMovie.classList.remove("btn-primary");
-      addMovie.classList.add("btn-success");
-  
-      document.querySelector("#movie-name").value = movie.name;
-      document.querySelector("#movie-description").value = movie.description;
-      document.querySelector("#movie-category").value = movie.category;
-      document.querySelector("#movie-img").value = movie.imageUrl;
-    }
-  };
+  getMoviesByCategory("sci-fi");
+  getMoviesByCategory("horror");
+  getMoviesByCategory("action");
+  if (movieId) {
+    const response = await fetch(`${baseUrl}${movieCategory}`, {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
+      },
+    });
+    const movies = await response.json();
+    const movie = movies.find((movie) => movie._id === movieId);
+    console.log(movies);
+    let addMovie = document.getElementById("add-movie");
+    addMovie.innerText = "Edit";
+    addMovie.classList.remove("btn-primary");
+    addMovie.classList.add("btn-success");
+
+    document.querySelector("#movie-name").value = movie.name;
+    document.querySelector("#movie-description").value = movie.description;
+    document.querySelector("#movie-category").value = movie.category;
+    document.querySelector("#movie-img").value = movie.imageUrl;
+  }
+};
