@@ -1,100 +1,95 @@
 const inputCategory = document.querySelector("#movie-category");
 const baseUrl = "https://striveschool-api.herokuapp.com/api/movies/";
-// const keyHeaders =
-// const methodPostPut =
-//Create a carrousel for each genre
-
-//If genre is included(genres fetch) then push movie into genre fetch
-
-//else genre is not included on (genres fetch) then create the genre and then do the if statement
-
-//Fetch Genres
-
-fetch(baseUrl, {
+const optionsGet = {
   method: "GET",
   headers: {
     Authorization:
       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
   },
-})
-  .then((response) => response.json())
-  .then((categories) => console.log(categories));
+};
+const params = new URLSearchParams(window.location.search);
+const movieId = params.get("movieId");
+const movieCategory = params.get("category");
 
-//     container.innerHTML += `<div class="card col-sm-6 col-md-4 col-lg-3" style="width: 18rem;">
-//       <img src="${movie.img}" class="card-img-top" alt="${movie.title}+ cover">
-//       <div class="card-body">
-//         <h5 class="card-title">${book.title}</h5>
-//         <span class="card-text">${book.category}</span>
-//         <span class="card-text">${book.price}</span>
-//         <div class="d-flex justify-content-between">
-//     <button type="button" class="btn btn-primary">Add to cart</button>
-//     <button type="button" class="btn btn-secondary">Skip</button>
-//   </div>;
-//         <div>
-//       </div>
+//Fetch Categories asynch
+async function getMoviesByCategory(category) {
+  try {
+    const response = await fetch(`${baseUrl}${category}/`, {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
+      },
+    });
+    const movies = await response.json();
+    showMovies(movies, category);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+async function showMovies(movies, category) {
+  const movieContainer = document.getElementById(category);
+  movies.forEach((movie) => {
+    console.log(movieContainer);
+    movieContainer.innerHTML += `<div class="col-md-2 ">
+     <a href="details.html?movieId=${movie._id}&category=${movie.category}"><img class="movie-cover" src="${movie.imageUrl}"/></a> 
+    </div>`;
+  });
+}
+
+// categoryContainer = querySelectorAll(.)
+// const category = categoryContainer.innerText
+// // Fetch Movies synch
+// async function getMovies() {
+//   try {
+//     const unreadableData = await fetch(
+//       `"https://striveschool-api.herokuapp.com/api/movies/${category}"`,
+//       options
+//     );
+//     const movies = await unreadableData.json();
+//     console.log("getCateg");
+//     console.log(movies);
+//     movies.forEach((movie) => {
+//       let movieContainer = document.createElement("div");
+//       movieContainer.classList.add("col-md-2");
+//       movieContainer.innerHTML = `<a href="details.html?movieId=${movie._id}"><img class="movie-cover" src="${movie.imageUrl}"/></a>`;
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+// let movieContainer = document.createElement("div");
+// movieContainer.classList.add("col-md-2");
+// movieContainer.innerHTML = `<a href="details.html?movieId=${movie._id}"><img class="movie-cover" src="${movie.imageUrl}"/></a>`;
+// });
+// async function getMoviesCategory(category) {
+//   try {
+//     const response = await fetch(
+//       `"https://striveschool-api.herokuapp.com/api/movies/${category}"`,
+//       optionsGet
+//     );
+//     const movies = await response.json();
+//     console.log(movies);
+//     displayMovies(movies, category);
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+// }
+
+// async function displayMovies(movies, category) {
+//   const categoryContainer = document.getElementById(category);
+//   console.log(categoryContainer);
+//   movies.forEach((movie) => {
+//     categoryContainer.innerHTML += `
+//     <div class="col-md-2 ">
+//     <a href="details.html?movieId=${movie._id}"><img class="movie-cover" src="${movie.imageUrl}"/></a>
 //     </div>`;
 //   });
-// };
+// }
 
-//Fetch Movies synch
-const getMovies = fetch(
-  "https://striveschool-api.herokuapp.com/api/movies/horror",
-  {
-    method: "GET",
-    headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
-    },
-  }
-)
-  .then((response) => response.json())
-  .then((movies) => console.log(movies));
-
-//Fetch Movies asynch
-// const getMovies = async () => {
-//     let unreadableData = await fetch(
-//         "https://striveschool-api.herokuapp.com/api/movies/horror", {
-//         method: "GET",
-//         headers: {
-//           Authorization:
-//             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
-//         }),
-//         let movies = await unreadableData.json();
-//         console.log(books);
-// };
-
-const renderMovies = (arrayOfMovies) => {
-  arrayOfMovies.forEach((movie) => {
-    console.log("Inside the forEach()");
-    console.log(movie);
-    console.log(movie.name);
-  });
-};
-
-async function onFormSubmit(event) {
-  event.preventDefault();
-
-  const newMovie = {
-    name: document.querySelector("#movie-name").value,
-    description: document.querySelector("#movie-description").value,
-    category: inputCategory.value,
-    imageUrl: document.querySelector("#movie-img").value,
-  };
-
-  console.log(newMovie);
-
-  fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjkxYmQ0YmUzZDAwMTU4NDYwMWQiLCJpYXQiOjE2NjgwODYwNDMsImV4cCI6MTY2OTI5NTY0M30.eZMhitUsKsTXuw2pPSDdb8s15TKDisvdmrvS1a_vuKk",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newMovie),
-  });
-  //     .then((res) => res.json())
-  //     .then((data) => callback(null, data));
-}
 window.onload = async () => {
   console.log("Am I working?");
+  getMoviesByCategory("sci-fi");
+  getMoviesCategory("horror");
+  getMoviesCategory("action");
 };

@@ -31,46 +31,22 @@
         <div class="row">
           <div class="col-md-9 col-xs-12">
             <div class="border p-3">
-              <form onsubmit="onFormSubmit(event)" id="movie-form">
+              <div id="movie-form">
                 <!-- MY MOVIE -->
-                <div class="form-group text-light pt-3">
-                  <label for="event-name">Name</label>
-                  <input type="text" class="form-control" id="movie-name" />
-                </div>
-                <div class="form-group text-light">
-                  <label for="event-description">Description</label>
-                  <textarea
-                    class="form-control"
-                    id="movie-description"
-                  ></textarea>
-                </div>
-                <div class="form-group text-light">
-                  <label for="event-category">Category</label>
-                  <input type="text" class="form-control" id="movie-category" />
-                </div>
-                <div class="form-group text-light">
-                  <label for="event-img">Image(Url)</label>
-                  <input type="text" class="form-control" id="movie-img" />
-                </div>
+
                 <!-- MY MOVIE -->
                 <div class="row">
                   <div class="col-md-9 col-xs-12">
-                    <button
-                      type="submit"
-                      class="btn btn-light w-100 border mt-3"
-                    >
-                      Add Movie
+                    <button type="button" class="btn btn-success" onclick="onEdit()">
+                      Edit Movie
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="onDelete()">
+                      Delete Movie
+                    </button>
                     </button>
                   </div>
                 </div>
-              </form>
-              <!-- <div class="col-md-5">
-            <button class="btn btn-outline-secondary w-100">CANCEL</button>
-          </div>
-          <div class="col-md-5">
-            <button class="btn btn-outline-secondary w-100">
-              DELETE PROFILE
-            </button> -->
+              </div>
             </div>
           </div>
         </div>
@@ -81,6 +57,6 @@
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
-    <script src="js/backoffice.js"></script>
+    <script src="js/details.js"></script>
   </body>
 </html>
